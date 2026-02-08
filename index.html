@@ -22,6 +22,8 @@
       color: #fff;
       text-shadow: 2px 2px #ff69b4;
       text-align: center;
+      font-size: 28px;
+      margin-top: 20px;
     }
 
     .photo-container {
@@ -78,10 +80,10 @@
     }
 
     #quiz-container button {
-      padding: 10px 20px;
-      margin: 5px;
+      padding: 12px 25px;
+      margin: 10px;
       font-size: 18px;
-      border-radius: 10px;
+      border-radius: 15px;
       border: none;
       cursor: pointer;
       background: #fff;
@@ -93,6 +95,17 @@
     #quiz-container button:hover {
       transform: scale(1.1);
       background: #ffe6f0;
+    }
+
+    .particle {
+      position: absolute;
+      font-size: 18px;
+      animation: particleRise 2s linear forwards;
+    }
+
+    @keyframes particleRise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-150px) scale(1.5); opacity: 0; }
     }
 
   </style>
@@ -178,7 +191,7 @@
       { question: "Vrei să mai facem surprize unul altuia? 🎁", left: "Da, să fie pline de zâmbete! 😍", right: "Nu, dar tot îmi plac surprizele tale 😘" },
       { question: "Simți că inima ta bate mai repede când sunt lângă tine? ❤️", left: "Da, tot timpul! 💓", right: "Nu tot timpul, dar te iubesc la fel 😘" },
       { question: "Vrei să râdem împreună mereu? 😄", left: "Da, râsul cu tine e magic! ✨", right: "Nu, dar râsul nostru e special 😘" },
-      { question: "Când te gândesti la mine, ce simți? 💖", left: "Fericire și iubire ❤️", right: "Un zâmbet și dor 😘" },
+      { question: "Când te gândești la mine, ce simți? 💖", left: "Fericire și iubire ❤️", right: "Un zâmbet și dor 😘" },
       { question: "Vrei să fie ziua ta specială și mai memorabilă? 🎉", left: "Da, cu tine totul e perfect! 😍", right: "Nu, dar cu tine e deja minunat 😘" }
     ];
 
@@ -195,14 +208,35 @@
       const q = quizData[currentIndex];
       const text = isLeft ? q.left : q.right;
       const btn = isLeft ? btnLeft : btnRight;
+
+      // efect puls
       btn.style.transform = "scale(1.2)";
       setTimeout(() => { btn.style.transform = "scale(1)"; }, 200);
+
+      // vibratie telefon (mobil)
+      if (navigator.vibrate) navigator.vibrate(100);
+
+      // afisare raspuns
       answerDiv.style.opacity = 0;
       answerDiv.textContent = text;
       setTimeout(() => { answerDiv.style.opacity = 1; }, 50);
-      // sunet la click (opțional)
-      // let audio = new Audio('click.mp3'); audio.play();
+
+      // particule
+      createParticles();
+
       nextQuestion();
+    }
+
+    function createParticles() {
+      for(let i=0; i<10; i++){
+        const p = document.createElement("div");
+        p.className = "particle";
+        p.style.left = Math.random()*80 + "%";
+        p.style.top = "90%";
+        p.textContent = "❤️";
+        document.body.appendChild(p);
+        setTimeout(()=>p.remove(),2000);
+      }
     }
 
     btnLeft.addEventListener("click", () => handleClick(true));
@@ -223,6 +257,7 @@
     }
 
     showQuestion(currentIndex);
+
   </script>
 
 </body>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ziua Ta, Cosmina ❤️</title>
+  <title>Buburuza mea, Cosmina ❤️</title>
   <style>
     body {
       margin: 0;
@@ -265,7 +265,7 @@
     btnLeft.addEventListener("click", () => handleClick(true));
     btnRight.addEventListener("click", () => handleClick(false));
 
-    // Secret surprise
+    // Secret surprise cu confetti full screen
     const secretContainer = document.getElementById("secret-container");
     const secretBtn = document.getElementById("secret-btn");
     const secretMessage = document.getElementById("secret-message");
@@ -274,31 +274,43 @@
       secretMessage.textContent = "Te iubesc infinit, Cosmina! 💖 Tu ești totul pentru mine!";
       secretBtn.style.display = "none";
 
-      // Confetti/particule speciale
-      for(let i=0;i<50;i++){
+      // Confetti romantic full screen
+      for(let i=0;i<100;i++){
         const confetti = document.createElement("div");
         confetti.className = "particle";
-        confetti.style.left = Math.random()*90 + "%";
-        confetti.style.top = "80%";
-        confetti.style.fontSize = (10+Math.random()*20)+"px";
-        confetti.textContent = ["🎉","💖","✨","❤️"][Math.floor(Math.random()*4)];
+        confetti.style.left = Math.random()*100 + "%";
+        confetti.style.top = "-10%";
+        confetti.style.fontSize = (10+Math.random()*25)+"px";
+        confetti.style.color = ["#ff69b4","#ff1493","#fff0f5","#ffb6c1","#ff0000","#ffd700"][Math.floor(Math.random()*6)];
+        confetti.textContent = ["❤️","💖","✨","🌸","🎉"][Math.floor(Math.random()*5)];
         document.body.appendChild(confetti);
-        setTimeout(()=>confetti.remove(),3000);
+
+        const fallDuration = 3000 + Math.random()*2000;
+        confetti.animate([
+          { transform: `translateY(0px) rotate(0deg)` },
+          { transform: `translateY(100vh) rotate(${Math.random()*720}deg)` }
+        ], {
+          duration: fallDuration,
+          iterations: 1,
+          easing: 'ease-out'
+        });
+
+        setTimeout(()=>confetti.remove(), fallDuration);
       }
 
-      // Animatie inimioara mare
+      // Animatie inimioara mare in centru
       const bigHeart = document.createElement("div");
       bigHeart.textContent = "❤️";
       bigHeart.style.position = "fixed";
       bigHeart.style.left = "50%";
       bigHeart.style.top = "50%";
       bigHeart.style.transform = "translate(-50%, -50%) scale(0)";
-      bigHeart.style.fontSize = "100px";
+      bigHeart.style.fontSize = "120px";
       bigHeart.style.color = "#ff0000";
       bigHeart.style.transition = "transform 1s";
       document.body.appendChild(bigHeart);
       setTimeout(()=>bigHeart.style.transform="translate(-50%, -50%) scale(1)",50);
-      setTimeout(()=>bigHeart.remove(),3000);
+      setTimeout(()=>bigHeart.remove(),4000);
     }
 
     secretBtn.addEventListener("click", showSecret);
@@ -325,7 +337,6 @@
 
 </body>
 </html>
-
 
 
 

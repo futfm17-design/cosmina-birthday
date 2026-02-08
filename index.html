@@ -73,7 +73,7 @@
       color: #fff;
       font-size: 20px;
       max-width: 90%;
-      pointer-events: none; /* nu blochează click-urile */
+      pointer-events: none;
       min-height: 60px;
     }
 
@@ -122,241 +122,244 @@
       display: none;
     }
 
-    #secret-container button:hover {
-      transform: scale(1.1);
-      background: #ffe6f0;
-    }
-
-    #music-controls button:hover {
-      transform: scale(1.1);
-      background: #ffe6f0;
+    @keyframes shake {
+      0% { transform: translate(0px,0px); }
+      25% { transform: translate(5px,0px); }
+      50% { transform: translate(-5px,0px); }
+      75% { transform: translate(5px,0px); }
+      100% { transform: translate(0px,0px); }
     }
   </style>
 </head>
 <body>
 
-  <h1>Buburuza mea, e ziua ta astăzi ❤️</h1>
+<h1>Buburuza mea, e ziua ta astăzi ❤️</h1>
 
-  <div class="photo-container">
-    <img src="Bubu-loving-Dudu.png" alt="Bubu și Dudu" class="animated-photo">
-    <div class="heart" style="left:20%;">❤️</div>
-    <div class="heart" style="left:50%; animation-delay: 1s;">❤️</div>
-    <div class="heart" style="left:70%; animation-delay: 2s;">❤️</div>
-  </div>
+<div class="photo-container">
+  <img src="Bubu-loving-Dudu.png" alt="Bubu și Dudu" class="animated-photo">
+  <div class="heart" style="left:20%;">❤️</div>
+  <div class="heart" style="left:50%; animation-delay: 1s;">❤️</div>
+  <div class="heart" style="left:70%; animation-delay: 2s;">❤️</div>
+</div>
 
-  <div id="messages-container"></div>
+<div id="messages-container"></div>
 
-  <div id="quiz-container">
-    <div id="question" style="font-size: 22px; color: #fff; margin-bottom: 15px;"></div>
-    <button id="btn-left">Da</button>
-    <button id="btn-right">Nu</button>
-    <div id="answer" style="margin-top: 20px; color: #fff; font-size: 20px;"></div>
-  </div>
+<div id="quiz-container">
+  <div id="question" style="font-size: 22px; color: #fff; margin-bottom: 15px;"></div>
+  <button id="btn-left">Da</button>
+  <button id="btn-right">Nu</button>
+  <div id="answer" style="margin-top: 20px; color: #fff; font-size: 20px;"></div>
+</div>
 
-  <div id="secret-container">
-    <button id="secret-btn" style="padding:15px 25px; font-size:18px; border-radius:15px; background:#fff; color:#ff69b4; font-weight:bold; border:none; cursor:pointer;">Apasă aici pentru surpriză ❤️</button>
-    <div id="secret-message" style="margin-top:20px; font-size:22px; color:#fff;"></div>
-  </div>
+<div id="secret-container">
+  <button id="secret-btn" style="padding:15px 25px; font-size:18px; border-radius:15px; background:#fff; color:#ff69b4; font-weight:bold; border:none; cursor:pointer;">Apasă aici pentru surpriză ❤️</button>
+  <div id="secret-message" style="margin-top:20px; font-size:22px; color:#fff;"></div>
+</div>
 
-  <!-- Muzică de fundal -->
-  <div id="music-controls" style="position: fixed; top: 10px; right: 10px; z-index: 100;">
-    <button id="music-btn" style="padding:10px 15px; border:none; border-radius:10px; background:#fff; color:#ff69b4; font-weight:bold; cursor:pointer;">
-      🔊 Play Muzică
-    </button>
-    <audio id="bg-music" loop>
-      <source src="muzica.mp3" type="audio/mpeg">
-      Browserul tău nu suportă audio.
-    </audio>
-  </div>
+<!-- Muzică de fundal -->
+<div id="music-controls" style="position: fixed; top: 10px; right: 10px; z-index: 100;">
+  <button id="music-btn" style="padding:10px 15px; border:none; border-radius:10px; background:#fff; color:#ff69b4; font-weight:bold; cursor:pointer;">
+    🔊 Play Muzică
+  </button>
+  <audio id="bg-music" loop>
+    <source src="muzica.mp3" type="audio/mpeg">
+    Browserul tău nu suportă audio.
+  </audio>
+</div>
 
-  <script>
-    // Inimioare animate
-    const container = document.querySelector('.photo-container');
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.style.left = Math.random() * 80 + '%';
-      heart.style.fontSize = (20 + Math.random() * 20) + 'px';
-      heart.style.animationDuration = (3 + Math.random() * 3) + 's';
-      heart.textContent = '❤️';
-      container.appendChild(heart);
-      setTimeout(() => heart.remove(), 6000);
+<script>
+  // Inimioare animate
+  const container = document.querySelector('.photo-container');
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.left = Math.random() * 80 + '%';
+    heart.style.fontSize = (20 + Math.random() * 20) + 'px';
+    heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+    heart.textContent = '❤️';
+    container.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+  }
+  setInterval(createHeart, 500);
+
+  // Mesaje romantice
+  const messages = [
+    "Îți aduci aminte când am mers prima dată la mare împreună? 🌊",
+    "Îmi place cum râzi și cum îmi luminezi zilele 😍",
+    "Buburuza mea, fiecare zi cu tine e magică ✨",
+    "Abia aștept să sărbătorim astăzi împreună ❤️"
+  ];
+  const msgContainer = document.getElementById("messages-container");
+  let msgIndex = 0;
+  function showMessage() {
+    if(msgIndex < messages.length) {
+      const msg = document.createElement("div");
+      msg.textContent = messages[msgIndex];
+      msg.style.opacity = 0;
+      msg.style.transition = "opacity 1s";
+      msgContainer.appendChild(msg);
+      setTimeout(() => { msg.style.opacity = 1; }, 100);
+      setTimeout(() => { msg.style.opacity = 0; }, 3500);
+      msgIndex++;
+      setTimeout(showMessage, 4000);
     }
-    setInterval(createHeart, 500);
+  }
+  setTimeout(showMessage, 2000);
 
-    // Mesaje romantice
-    const messages = [
-      "Îți aduci aminte când am mers prima dată la mare împreună? 🌊",
-      "Îmi place cum râzi și cum îmi luminezi zilele 😍",
-      "Buburuza mea, fiecare zi cu tine e magică ✨",
-      "Abia aștept să sărbătorim astăzi împreună ❤️"
-    ];
-    const msgContainer = document.getElementById("messages-container");
-    let msgIndex = 0;
-    function showMessage() {
-      if(msgIndex < messages.length) {
-        const msg = document.createElement("div");
-        msg.textContent = messages[msgIndex];
-        msg.style.opacity = 0;
-        msg.style.transition = "opacity 1s";
-        msgContainer.appendChild(msg);
-        setTimeout(() => { msg.style.opacity = 1; }, 100);
-        setTimeout(() => { msg.style.opacity = 0; }, 3500);
-        msgIndex++;
-        setTimeout(showMessage, 4000);
-      }
+  // Mini-joc interactiv
+  const btnLeft = document.getElementById("btn-left");
+  const btnRight = document.getElementById("btn-right");
+  const answerDiv = document.getElementById("answer");
+  const questionDiv = document.getElementById("question");
+
+  const quizData = [
+    { question: "Simți că sunt tot pentru tine? 💖", left: "Da, mereu și pentru totdeauna! 😍", right: "Nu, dar totuși ești specială 😘" },
+    { question: "Vrei să mai facem amintiri împreună?", left: "Da, să fie aventuri magice! ✨", right: "Nu, dar abia aștept să râdem împreună 😄" },
+    { question: "Mă vezi alături de tine mereu?", left: "Da, mereu! ❤️", right: "Nu, dar tot te iubesc 😘" }
+  ];
+
+  let currentIndex = 0;
+
+  function showQuestion(index) {
+    const q = quizData[index];
+    questionDiv.textContent = q.question;
+    answerDiv.style.opacity = 0;
+    answerDiv.textContent = "";
+  }
+
+  function createParticles() {
+    for(let i=0; i<10; i++){
+      const p = document.createElement("div");
+      p.className = "particle";
+      p.style.left = Math.random()*80 + "%";
+      p.style.top = "90%";
+      p.textContent = "❤️";
+      document.body.appendChild(p);
+      setTimeout(()=>p.remove(),2000);
     }
-    setTimeout(showMessage, 2000);
+  }
 
-    // Mini-joc interactiv
-    const btnLeft = document.getElementById("btn-left");
-    const btnRight = document.getElementById("btn-right");
-    const answerDiv = document.getElementById("answer");
-    const questionDiv = document.getElementById("question");
+  function handleClick(isLeft) {
+    const q = quizData[currentIndex];
+    const text = isLeft ? q.left : q.right;
+    const btn = isLeft ? btnLeft : btnRight;
 
-    const quizData = [
-      { question: "Simți că sunt tot pentru tine? 💖", left: "Da, mereu și pentru totdeauna! 😍", right: "Nu, dar totuși ești specială 😘" },
-      { question: "Vrei să mai facem amintiri împreună?", left: "Da, să fie aventuri magice! ✨", right: "Nu, dar abia aștept să râdem împreună 😄" },
-      { question: "Mă vezi alături de tine mereu?", left: "Da, mereu! ❤️", right: "Nu, dar tot te iubesc 😘" },
-      { question: "Care e amintirea ta preferată cu noi? 🌅", left: "Când am mers la plajă și am râs nonstop! 🏖️", right: "Când am stat doar noi doi și ne-am uitat la stele ✨" },
-      { question: "Vrei să mai facem surprize unul altuia? 🎁", left: "Da, să fie pline de zâmbete! 😍", right: "Nu, dar tot îmi plac surprizele tale 😘" },
-      { question: "Simți că inima ta bate mai repede când sunt lângă tine? ❤️", left: "Da, tot timpul! 💓", right: "Nu tot timpul, dar te iubesc la fel 😘" },
-      { question: "Vrei să râdem împreună mereu? 😄", left: "Da, râsul cu tine e magic! ✨", right: "Nu, dar râsul nostru e special 😘" },
-      { question: "Când te gândești la mine, ce simți? 💖", left: "Fericire și iubire ❤️", right: "Un zâmbet și dor 😘" },
-      { question: "Vrei să fie ziua ta specială și mai memorabilă? 🎉", left: "Da, cu tine totul e perfect! 😍", right: "Nu, dar cu tine e deja minunat 😘" }
-    ];
-
-    let currentIndex = 0;
-
-    function showQuestion(index) {
-      const q = quizData[index];
-      questionDiv.textContent = q.question;
-      answerDiv.style.opacity = 0;
-      answerDiv.textContent = "";
-    }
-
-    function handleClick(isLeft) {
-      const q = quizData[currentIndex];
-      const text = isLeft ? q.left : q.right;
-      const btn = isLeft ? btnLeft : btnRight;
-
-      // efect puls
-      btn.style.transform = "scale(1.2)";
-      setTimeout(() => { btn.style.transform = "scale(1)"; }, 200);
-
-      // vibratie telefon
-      if (navigator.vibrate) navigator.vibrate(100);
-
-      // afisare raspuns
-      answerDiv.style.opacity = 0;
-      answerDiv.textContent = text;
-      setTimeout(() => { answerDiv.style.opacity = 1; }, 50);
-
-      // particule
-      createParticles();
-
-      nextQuestion();
+    // 30% șansă ca butonul opus să fugă
+    if(Math.random() < 0.3){
+      const moveBtn = isLeft ? btnRight : btnLeft;
+      moveBtn.style.transform = `translate(${Math.random()*50 - 25}px, ${Math.random()*30 - 15}px)`;
+      setTimeout(()=>moveBtn.style.transform="translate(0,0)",500);
+      // shake ecran
+      document.body.style.animation = "shake 0.3s";
+      document.body.addEventListener("animationend", ()=> document.body.style.animation="");
     }
 
-    function createParticles() {
-      for(let i=0; i<10; i++){
-        const p = document.createElement("div");
-        p.className = "particle";
-        p.style.left = Math.random()*80 + "%";
-        p.style.top = "90%";
-        p.textContent = "❤️";
-        document.body.appendChild(p);
-        setTimeout(()=>p.remove(),2000);
-      }
+    // efect puls buton apăsat
+    btn.style.transform = "scale(1.2)";
+    setTimeout(() => { btn.style.transform = "scale(1)"; }, 200);
+
+    // vibratie telefon
+    if (navigator.vibrate) navigator.vibrate(100);
+
+    // sunet click (opțional)
+    // const audioClick = new Audio('click.mp3'); // pune click.mp3 în repo dacă vrei
+    // audioClick.play().catch(()=>{});
+
+    // afișare răspuns
+    answerDiv.style.opacity = 0;
+    answerDiv.textContent = text;
+    setTimeout(() => { answerDiv.style.opacity = 1; }, 50);
+
+    createParticles();
+    nextQuestion();
+  }
+
+  btnLeft.addEventListener("click", () => handleClick(true));
+  btnRight.addEventListener("click", () => handleClick(false));
+
+  // Secret surprise cu confetti
+  const secretContainer = document.getElementById("secret-container");
+  const secretBtn = document.getElementById("secret-btn");
+  const secretMessage = document.getElementById("secret-message");
+
+  function showSecret() {
+    secretMessage.textContent = "Te iubesc infinit, Cosmina! 💖 Tu ești totul pentru mine!";
+    secretBtn.style.display = "none";
+
+    for(let i=0;i<100;i++){
+      const confetti = document.createElement("div");
+      confetti.className = "particle";
+      confetti.style.left = Math.random()*100 + "%";
+      confetti.style.top = "-10%";
+      confetti.style.fontSize = (10+Math.random()*25)+"px";
+      confetti.style.color = ["#ff69b4","#ff1493","#fff0f5","#ffb6c1","#ff0000","#ffd700"][Math.floor(Math.random()*6)];
+      confetti.textContent = ["❤️","💖","✨","🌸","🎉"][Math.floor(Math.random()*5)];
+      document.body.appendChild(confetti);
+
+      const fallDuration = 3000 + Math.random()*2000;
+      confetti.animate([
+        { transform: `translateY(0px) rotate(0deg)` },
+        { transform: `translateY(100vh) rotate(${Math.random()*720}deg)` }
+      ], {
+        duration: fallDuration,
+        iterations: 1,
+        easing: 'ease-out'
+      });
+
+      setTimeout(()=>confetti.remove(), fallDuration);
     }
 
-    btnLeft.addEventListener("click", () => handleClick(true));
-    btnRight.addEventListener("click", () => handleClick(false));
+    const bigHeart = document.createElement("div");
+    bigHeart.textContent = "❤️";
+    bigHeart.style.position = "fixed";
+    bigHeart.style.left = "50%";
+    bigHeart.style.top = "50%";
+    bigHeart.style.transform = "translate(-50%, -50%) scale(0)";
+    bigHeart.style.fontSize = "120px";
+    bigHeart.style.color = "#ff0000";
+    bigHeart.style.transition = "transform 1s";
+    document.body.appendChild(bigHeart);
+    setTimeout(()=>bigHeart.style.transform="translate(-50%, -50%) scale(1)",50);
+    setTimeout(()=>bigHeart.remove(),4000);
+  }
 
-    // Secret surprise cu confetti full screen
-    const secretContainer = document.getElementById("secret-container");
-    const secretBtn = document.getElementById("secret-btn");
-    const secretMessage = document.getElementById("secret-message");
+  secretBtn.addEventListener("click", showSecret);
 
-    function showSecret() {
-      secretMessage.textContent = "Te iubesc infinit, Cosmina! 💖 Tu ești totul pentru mine!";
-      secretBtn.style.display = "none";
-
-      for(let i=0;i<100;i++){
-        const confetti = document.createElement("div");
-        confetti.className = "particle";
-        confetti.style.left = Math.random()*100 + "%";
-        confetti.style.top = "-10%";
-        confetti.style.fontSize = (10+Math.random()*25)+"px";
-        confetti.style.color = ["#ff69b4","#ff1493","#fff0f5","#ffb6c1","#ff0000","#ffd700"][Math.floor(Math.random()*6)];
-        confetti.textContent = ["❤️","💖","✨","🌸","🎉"][Math.floor(Math.random()*5)];
-        document.body.appendChild(confetti);
-
-        const fallDuration = 3000 + Math.random()*2000;
-        confetti.animate([
-          { transform: `translateY(0px) rotate(0deg)` },
-          { transform: `translateY(100vh) rotate(${Math.random()*720}deg)` }
-        ], {
-          duration: fallDuration,
-          iterations: 1,
-          easing: 'ease-out'
-        });
-
-        setTimeout(()=>confetti.remove(), fallDuration);
-      }
-
-      const bigHeart = document.createElement("div");
-      bigHeart.textContent = "❤️";
-      bigHeart.style.position = "fixed";
-      bigHeart.style.left = "50%";
-      bigHeart.style.top = "50%";
-      bigHeart.style.transform = "translate(-50%, -50%) scale(0)";
-      bigHeart.style.fontSize = "120px";
-      bigHeart.style.color = "#ff0000";
-      bigHeart.style.transition = "transform 1s";
-      document.body.appendChild(bigHeart);
-      setTimeout(()=>bigHeart.style.transform="translate(-50%, -50%) scale(1)",50);
-      setTimeout(()=>bigHeart.remove(),4000);
+  function nextQuestion() {
+    currentIndex++;
+    if(currentIndex < quizData.length) {
+      setTimeout(() => showQuestion(currentIndex), 2000);
+    } else {
+      setTimeout(() => {
+        questionDiv.textContent = "Mulțumesc că ești în viața mea ❤️";
+        answerDiv.textContent = "";
+        btnLeft.style.display = "none";
+        btnRight.style.display = "none";
+        secretContainer.style.display = "block";
+      }, 2500);
     }
+  }
 
-    secretBtn.addEventListener("click", showSecret);
+  showQuestion(currentIndex);
 
-    function nextQuestion() {
-      currentIndex++;
-      if(currentIndex < quizData.length) {
-        setTimeout(() => showQuestion(currentIndex), 2000);
-      } else {
-        setTimeout(() => {
-          questionDiv.textContent = "Mulțumesc că ești în viața mea ❤️";
-          answerDiv.textContent = "";
-          btnLeft.style.display = "none";
-          btnRight.style.display = "none";
+  // Muzică
+  const music = document.getElementById("bg-music");
+  const musicBtn = document.getElementById("music-btn");
 
-          secretContainer.style.display = "block";
-        }, 2500);
-      }
+  musicBtn.addEventListener("click", () => {
+    if (music.paused) {
+      music.play();
+      musicBtn.textContent = "🔇 Oprește Muzica";
+    } else {
+      music.pause();
+      musicBtn.textContent = "🔊 Play Muzică";
     }
+  });
 
-    showQuestion(currentIndex);
-
-    // Muzică
-    const music = document.getElementById("bg-music");
-    const musicBtn = document.getElementById("music-btn");
-
-    musicBtn.addEventListener("click", () => {
-      if (music.paused) {
-        music.play();
-        musicBtn.textContent = "🔇 Oprește Muzica";
-      } else {
-        music.pause();
-        musicBtn.textContent = "🔊 Play Muzică";
-      }
-    });
-
-  </script>
-
+</script>
 </body>
 </html>
+
 
 
 

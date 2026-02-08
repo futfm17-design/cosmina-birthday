@@ -9,13 +9,12 @@
       margin: 0;
       padding: 0;
       background: #FFC0CB;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
       font-family: 'Arial', sans-serif;
-      overflow: hidden;
+      overflow-x: hidden;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     h1 {
@@ -28,8 +27,8 @@
 
     .photo-container {
       position: relative;
-      width: 300px;
-      height: 300px;
+      width: 80%;
+      max-width: 300px;
       margin-top: 20px;
     }
 
@@ -66,17 +65,26 @@
     }
 
     #messages-container {
-      margin-top: 20px;
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
       text-align: center;
       color: #fff;
       font-size: 20px;
       max-width: 90%;
-      min-height: 50px;
+      pointer-events: none; /* nu blochează click-urile */
+      min-height: 60px;
     }
 
     #quiz-container {
-      margin-top: 30px;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
       text-align:center;
+      z-index: 100;
     }
 
     #quiz-container button {
@@ -108,6 +116,11 @@
       100% { transform: translateY(-150px) scale(1.5); opacity: 0; }
     }
 
+    #secret-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
     #secret-container button:hover {
       transform: scale(1.1);
       background: #ffe6f0;
@@ -135,7 +148,7 @@
     <div id="answer" style="margin-top: 20px; color: #fff; font-size: 20px;"></div>
   </div>
 
-  <div id="secret-container" style="display:none; margin-top:20px; text-align:center;">
+  <div id="secret-container" style="display:none;">
     <button id="secret-btn" style="padding:15px 25px; font-size:18px; border-radius:15px; background:#fff; color:#ff69b4; font-weight:bold; border:none; cursor:pointer;">Apasă aici pentru surpriză ❤️</button>
     <div id="secret-message" style="margin-top:20px; font-size:22px; color:#fff;"></div>
   </div>
@@ -312,6 +325,7 @@
 
 </body>
 </html>
+
 
 
 

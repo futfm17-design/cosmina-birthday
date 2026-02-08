@@ -119,6 +119,7 @@
     #secret-container {
       text-align: center;
       margin-top: 20px;
+      display: none;
     }
 
     #secret-container button:hover {
@@ -126,6 +127,10 @@
       background: #ffe6f0;
     }
 
+    #music-controls button:hover {
+      transform: scale(1.1);
+      background: #ffe6f0;
+    }
   </style>
 </head>
 <body>
@@ -148,18 +153,21 @@
     <div id="answer" style="margin-top: 20px; color: #fff; font-size: 20px;"></div>
   </div>
 
-  <div id="secret-container" style="display:none;">
+  <div id="secret-container">
     <button id="secret-btn" style="padding:15px 25px; font-size:18px; border-radius:15px; background:#fff; color:#ff69b4; font-weight:bold; border:none; cursor:pointer;">Apasă aici pentru surpriză ❤️</button>
     <div id="secret-message" style="margin-top:20px; font-size:22px; color:#fff;"></div>
   </div>
 
-  <!-- Muzica de fundal (opțional) -->
-  <!--
-  <audio autoplay loop>
-    <source src="muzica.mp3" type="audio/mpeg">
-    Browserul tău nu suportă audio.
-  </audio>
-  -->
+  <!-- Muzică de fundal -->
+  <div id="music-controls" style="position: fixed; top: 10px; right: 10px; z-index: 100;">
+    <button id="music-btn" style="padding:10px 15px; border:none; border-radius:10px; background:#fff; color:#ff69b4; font-weight:bold; cursor:pointer;">
+      🔊 Play Muzică
+    </button>
+    <audio id="bg-music" loop>
+      <source src="muzica.mp3" type="audio/mpeg">
+      Browserul tău nu suportă audio.
+    </audio>
+  </div>
 
   <script>
     // Inimioare animate
@@ -274,7 +282,6 @@
       secretMessage.textContent = "Te iubesc infinit, Cosmina! 💖 Tu ești totul pentru mine!";
       secretBtn.style.display = "none";
 
-      // Confetti romantic full screen
       for(let i=0;i<100;i++){
         const confetti = document.createElement("div");
         confetti.className = "particle";
@@ -298,7 +305,6 @@
         setTimeout(()=>confetti.remove(), fallDuration);
       }
 
-      // Animatie inimioara mare in centru
       const bigHeart = document.createElement("div");
       bigHeart.textContent = "❤️";
       bigHeart.style.position = "fixed";
@@ -326,13 +332,27 @@
           btnLeft.style.display = "none";
           btnRight.style.display = "none";
 
-          // Arata butonul secret
           secretContainer.style.display = "block";
         }, 2500);
       }
     }
 
     showQuestion(currentIndex);
+
+    // Muzică
+    const music = document.getElementById("bg-music");
+    const musicBtn = document.getElementById("music-btn");
+
+    musicBtn.addEventListener("click", () => {
+      if (music.paused) {
+        music.play();
+        musicBtn.textContent = "🔇 Oprește Muzica";
+      } else {
+        music.pause();
+        musicBtn.textContent = "🔊 Play Muzică";
+      }
+    });
+
   </script>
 
 </body>

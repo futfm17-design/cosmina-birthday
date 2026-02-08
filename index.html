@@ -108,6 +108,11 @@
       100% { transform: translateY(-150px) scale(1.5); opacity: 0; }
     }
 
+    #secret-container button:hover {
+      transform: scale(1.1);
+      background: #ffe6f0;
+    }
+
   </style>
 </head>
 <body>
@@ -128,6 +133,11 @@
     <button id="btn-left">Da</button>
     <button id="btn-right">Nu</button>
     <div id="answer" style="margin-top: 20px; color: #fff; font-size: 20px;"></div>
+  </div>
+
+  <div id="secret-container" style="display:none; margin-top:20px; text-align:center;">
+    <button id="secret-btn" style="padding:15px 25px; font-size:18px; border-radius:15px; background:#fff; color:#ff69b4; font-weight:bold; border:none; cursor:pointer;">Apasă aici pentru surpriză ❤️</button>
+    <div id="secret-message" style="margin-top:20px; font-size:22px; color:#fff;"></div>
   </div>
 
   <!-- Muzica de fundal (opțional) -->
@@ -177,7 +187,7 @@
     }
     setTimeout(showMessage, 2000);
 
-    // Mini-joc extins
+    // Mini-joc interactiv
     const btnLeft = document.getElementById("btn-left");
     const btnRight = document.getElementById("btn-right");
     const answerDiv = document.getElementById("answer");
@@ -213,7 +223,7 @@
       btn.style.transform = "scale(1.2)";
       setTimeout(() => { btn.style.transform = "scale(1)"; }, 200);
 
-      // vibratie telefon (mobil)
+      // vibratie telefon
       if (navigator.vibrate) navigator.vibrate(100);
 
       // afisare raspuns
@@ -242,6 +252,44 @@
     btnLeft.addEventListener("click", () => handleClick(true));
     btnRight.addEventListener("click", () => handleClick(false));
 
+    // Secret surprise
+    const secretContainer = document.getElementById("secret-container");
+    const secretBtn = document.getElementById("secret-btn");
+    const secretMessage = document.getElementById("secret-message");
+
+    function showSecret() {
+      secretMessage.textContent = "Te iubesc infinit, Cosmina! 💖 Tu ești totul pentru mine!";
+      secretBtn.style.display = "none";
+
+      // Confetti/particule speciale
+      for(let i=0;i<50;i++){
+        const confetti = document.createElement("div");
+        confetti.className = "particle";
+        confetti.style.left = Math.random()*90 + "%";
+        confetti.style.top = "80%";
+        confetti.style.fontSize = (10+Math.random()*20)+"px";
+        confetti.textContent = ["🎉","💖","✨","❤️"][Math.floor(Math.random()*4)];
+        document.body.appendChild(confetti);
+        setTimeout(()=>confetti.remove(),3000);
+      }
+
+      // Animatie inimioara mare
+      const bigHeart = document.createElement("div");
+      bigHeart.textContent = "❤️";
+      bigHeart.style.position = "fixed";
+      bigHeart.style.left = "50%";
+      bigHeart.style.top = "50%";
+      bigHeart.style.transform = "translate(-50%, -50%) scale(0)";
+      bigHeart.style.fontSize = "100px";
+      bigHeart.style.color = "#ff0000";
+      bigHeart.style.transition = "transform 1s";
+      document.body.appendChild(bigHeart);
+      setTimeout(()=>bigHeart.style.transform="translate(-50%, -50%) scale(1)",50);
+      setTimeout(()=>bigHeart.remove(),3000);
+    }
+
+    secretBtn.addEventListener("click", showSecret);
+
     function nextQuestion() {
       currentIndex++;
       if(currentIndex < quizData.length) {
@@ -252,16 +300,19 @@
           answerDiv.textContent = "";
           btnLeft.style.display = "none";
           btnRight.style.display = "none";
+
+          // Arata butonul secret
+          secretContainer.style.display = "block";
         }, 2500);
       }
     }
 
     showQuestion(currentIndex);
-
   </script>
 
 </body>
 </html>
+
 
 
 

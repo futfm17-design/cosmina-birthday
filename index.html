@@ -153,6 +153,7 @@
 </div>
 
 <script>
+// Inimioare animate
 const container = document.querySelector('.photo-container');
 function createHeart() {
   const heart = document.createElement('div');
@@ -166,6 +167,7 @@ function createHeart() {
 }
 setInterval(createHeart, 500);
 
+// Mesaje care apar pe rând
 const messages = [
   "Îți aduci aminte când am mers prima dată la mare împreună? 🌊",
   "Îmi place cum râzi și cum îmi luminezi zilele 😍",
@@ -189,15 +191,38 @@ function showMessage() {
 }
 setTimeout(showMessage, 2000);
 
+// Quiz interactiv pasional
 const btnLeft = document.getElementById("btn-left");
 const btnRight = document.getElementById("btn-right");
 const answerDiv = document.getElementById("answer");
 const questionDiv = document.getElementById("question");
 
 const quizData = [
-  { question: "Simți că sunt tot pentru tine? 💖", left: "Da, mereu și pentru totdeauna! 😍", right: "Nu, dar totuși ești specială 😘" },
-  { question: "Vrei să mai facem amintiri împreună?", left: "Da, să fie aventuri magice! ✨", right: "Nu, dar abia aștept să râdem împreună 😄" },
-  { question: "Mă vezi alături de tine mereu?", left: "Da, mereu! ❤️", right: "Nu, dar tot te iubesc 😘" }
+  { 
+    question: "Simți că te iubesc din toată inima mea? ❤️", 
+    left: "Da, simt fiecare bătaie a inimii tale pentru mine! 😍", 
+    right: "Nu, dar inima mea tot pentru tine bate 😘" 
+  },
+  { 
+    question: "Vrei să fim mereu împreună, indiferent de tot? 💖", 
+    left: "Da, fiecare clipă cu tine e un vis împlinit! ✨", 
+    right: "Nu, dar sufletul meu tot te adoră 😘" 
+  },
+  { 
+    question: "Te fac fericită cum nimeni altcineva nu poate? 💘", 
+    left: "Da, inima mea e completă doar cu tine! ❤️", 
+    right: "Nu, dar tot mă simt iubit când sunt cu tine 😍" 
+  },
+  { 
+    question: "Vrei să scriem împreună toate amintirile noastre magice? 🌸", 
+    left: "Da, fiecare zi alături de tine e o poveste! 💖", 
+    right: "Nu, dar fiecare clipă cu tine e un cadou 😘" 
+  },
+  { 
+    question: "Crezi că iubirea noastră e unică și eternă? 💞", 
+    left: "Da, sufletele noastre sunt pentru totdeauna! ✨", 
+    right: "Nu, dar te voi iubi mereu, fără condiții 😍" 
+  }
 ];
 
 let currentIndex = 0;
@@ -316,9 +341,9 @@ function nextQuestion() {
 
 showQuestion(currentIndex);
 
+// Muzica
 const music = document.getElementById("bg-music");
 const musicBtn = document.getElementById("music-btn");
-
 musicBtn.addEventListener("click", () => {
   if (music.paused) {
     music.play();

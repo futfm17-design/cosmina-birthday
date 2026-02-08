@@ -12,10 +12,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       flex-direction: column;
       font-family: 'Arial', sans-serif;
       overflow: hidden;
+      min-height: 100vh;
     }
 
     h1 {
@@ -69,6 +69,30 @@
       color: #fff;
       font-size: 20px;
       max-width: 90%;
+      min-height: 50px;
+    }
+
+    #quiz-container {
+      margin-top: 30px;
+      text-align:center;
+    }
+
+    #quiz-container button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      background: #fff;
+      color: #ff69b4;
+      font-weight: bold;
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    #quiz-container button:hover {
+      transform: scale(1.1);
+      background: #ffe6f0;
     }
   </style>
 </head>
@@ -85,6 +109,14 @@
   </div>
 
   <div id="messages-container"></div>
+
+  <!-- Mini-joc interactiv -->
+  <div id="quiz-container">
+    <div id="question" style="font-size: 22px; color: #fff; margin-bottom: 15px;"></div>
+    <button id="btn-left">Da</button>
+    <button id="btn-right">Nu</button>
+    <div id="answer" style="margin-top: 20px; color: #fff; font-size: 20px;"></div>
+  </div>
 
   <!-- Muzica de fundal (opțional) -->
   <!--
@@ -106,13 +138,12 @@
       heart.style.animationDuration = (3 + Math.random() * 3) + 's';
       heart.textContent = '❤️';
       container.appendChild(heart);
-
       setTimeout(() => heart.remove(), 6000);
     }
 
     setInterval(createHeart, 500);
 
-    // Mesaje care apar unul câte unul
+    // Mesaje romantice cu fade in/fade out
     const messages = [
       "Îți aduci aminte când am mers prima dată la mare împreună? 🌊",
       "Îmi place cum râzi și cum îmi luminezi zilele 😍",
@@ -121,32 +152,90 @@
     ];
 
     const msgContainer = document.getElementById("messages-container");
-    let index = 0;
+    let msgIndex = 0;
 
     function showMessage() {
-      if (index < messages.length) {
+      if(msgIndex < messages.length) {
         const msg = document.createElement("div");
-        msg.textContent = messages[index];
+        msg.textContent = messages[msgIndex];
         msg.style.opacity = 0;
         msg.style.transition = "opacity 1s";
         msgContainer.appendChild(msg);
 
-        setTimeout(() => {
-          msg.style.opacity = 1;
-        }, 100);
+        setTimeout(() => { msg.style.opacity = 1; }, 100);
+        setTimeout(() => { msg.style.opacity = 0; }, 3500);
 
-        index++;
+        msgIndex++;
         setTimeout(showMessage, 4000);
       }
     }
 
-    setTimeout(showMessage, 2000); // start după 2 secunde
+    setTimeout(showMessage, 2000);
+
+    // Mini-joc interactiv cu efecte la butoane
+    const btnLeft = document.getElementById("btn-left");
+    const btnRight = document.getElementById("btn-right");
+    const answerDiv = document.getElementById("answer");
+    const questionDiv = document.getElementById("question");
+
+    const quizData = [
+      { question: "Simți că sunt tot pentru tine? 💖", left: "Da, mereu și pentru totdeauna! 😍", right: "Nu, dar totuși ești specială 😘" },
+      { question: "Vrei să mai facem amintiri împreună?", left: "Da, să fie aventuri magice! ✨", right: "Nu, dar abia aștept să râdem împreună 😄" },
+      { question: "Mă vezi alături de tine mereu?", left: "Da, mereu! ❤️", right: "Nu, dar tot te iubesc 😘" }
+    ];
+
+    let currentIndex = 0;
+
+    function showQuestion(index) {
+      const q = quizData[index];
+      questionDiv.textContent = q.question;
+      answerDiv.style.opacity = 0;
+      answerDiv.textContent = "";
+    }
+
+    function handleClick(isLeft) {
+      const q = quizData[currentIndex];
+      const text = isLeft ? q.left : q.right;
+
+      // efect click: pulse buton
+      const btn = isLeft ? btnLeft : btnRight;
+      btn.style.transform = "scale(1.2)";
+      setTimeout(() => { btn.style.transform = "scale(1)"; }, 200);
+
+      // afișează mesaj cu fade
+      answerDiv.style.opacity = 0;
+      answerDiv.textContent = text;
+      setTimeout(() => { answerDiv.style.opacity = 1; }, 50);
+
+      // sunet la click (opțional)
+      // let audio = new Audio('click.mp3');
+      // audio.play();
+
+      nextQuestion();
+    }
+
+    btnLeft.addEventListener("click", () => handleClick(true));
+    btnRight.addEventListener("click", () => handleClick(false));
+
+    function nextQuestion() {
+      currentIndex++;
+      if(currentIndex < quizData.length) {
+        setTimeout(() => showQuestion(currentIndex), 2000);
+      } else {
+        setTimeout(() => {
+          questionDiv.textContent = "Mulțumesc că ești în viața mea ❤️";
+          answerDiv.textContent = "";
+          btnLeft.style.display = "none";
+          btnRight.style.display = "none";
+        }, 2500);
+      }
+    }
+
+    showQuestion(currentIndex);
   </script>
 
 </body>
 </html>
-
-
 
 
 

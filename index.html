@@ -261,9 +261,9 @@
     // vibratie telefon
     if (navigator.vibrate) navigator.vibrate(100);
 
-    // sunet click (opțional)
-    // const audioClick = new Audio('click.mp3'); // pune click.mp3 în repo dacă vrei
-    // audioClick.play().catch(()=>{});
+    // sunet click
+    const audioClick = new Audio('click.mp3');
+    audioClick.play().catch(()=>{});
 
     // afișare răspuns
     answerDiv.style.opacity = 0;
